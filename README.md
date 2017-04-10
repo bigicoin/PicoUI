@@ -1,6 +1,6 @@
 # Pico UI
 
-This repositoru contains various UI-related plugins for Pico CMS.
+This repository contains various UI-related plugins for Pico CMS.
 
 ## Why use these
 
@@ -47,7 +47,7 @@ The plugin will not be enabled by default, so simply add the following line to y
 $config[ 'PicoUICard.enabled' ] = true;
 ```
 
-*Bootstrap*: Bootstrap is a CSS and JS framework used commonly on many web sites. Pico UI Card relies on
+**Bootstrap**: Bootstrap is a CSS and JS framework used commonly on many web sites. Pico UI Card relies on
 some Bootstrap CSS elements to style and position cards properly.
 
 If your theme already includes Bootstrap, you are good. Default config will not include an extra copy of it.
@@ -58,7 +58,7 @@ If you don't, you can enable this setting to load Bootstrap from their official 
 $config[ 'PicoUICard.loadBootstrap' ] = true;
 ```
 
-*Card size and positioning*: Pico UI Cards are wrapped within a `row` class (Bootstrap), and so each card
+**Card size and positioning**: Pico UI Cards are wrapped within a `row` class (Bootstrap), and so each card
 has a definition of column size. (See [Bootstrap: Grid System](http://getbootstrap.com/css/#grid))
 
 Use the following config to change it. The default value is: `col-md-4 col-sm-6 col-xs-6`.
@@ -67,7 +67,7 @@ Use the following config to change it. The default value is: `col-md-4 col-sm-6 
 $config[ 'PicoUICard.cssClass.cardPosition' ] = 'col-md-4 col-sm-6 col-xs-6';
 ```
 
-*Title text and description text*: You can define your own CSS classes for the title text and description text.
+**Title text and description text**: You can define your own CSS classes for the title text and description text.
 Typically the use case for this would be customizing font sizes, colors, etc.
 
 ```
