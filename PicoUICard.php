@@ -49,12 +49,16 @@ final class PicoUICard extends AbstractPicoPlugin
 	public function onConfigLoaded(array &$config)
 	{
 		$this->config['loadBootstrap'] = false;
+		$this->config['cardRatio'] = '16:9';
 		$this->config['cardPosition'] = 'col-md-4 col-sm-6 col-xs-6';
 		$this->config['cardTitle'] = '';
 		$this->config['cardText'] = '';
 		// load custom config if needed
 		if (isset($config['PicoUICard.loadBootstrap'])) {
 			$this->config['loadBootstrap'] = $config['PicoUICard.loadBootstrap'];
+		}
+		if (isset($config['PicoUICard.cardRatio'])) {
+			$this->config['cardRatio'] = $config['PicoUICard.cardRatio'];
 		}
 		if (isset($config['PicoUICard.cssClass.cardPosition'])) {
 			$this->config['cardPosition'] = $config['PicoUICard.cssClass.cardPosition'];
@@ -65,6 +69,9 @@ final class PicoUICard extends AbstractPicoPlugin
 		if (isset($config['PicoUICard.cssClass.cardText'])) {
 			$this->config['cardText'] = $config['PicoUICard.cssClass.cardText'];
 		}
+		// some postprocessing of config
+		list($cardWidth, $cardHeight) = explode(':', $this->config['cardRatio']);
+		$this->config['cardHeightMultiplier'] = max(0.01, min(floatval($cardHeight) / floatval($cardWidth), 10)) * 100;
 	}
 
 	/**
@@ -90,7 +97,7 @@ final class PicoUICard extends AbstractPicoPlugin
 					preg_match_all('/\s*([a-z]+)\=[\'\"]([^\'\"]*)[\'\"]/', $matches[1], $attributes);
 					preg_match_all('/\[([a-z]+)\]([^\[]*)\[\/([a-z]+)\]\s*/', $matches[3], $subtags);
 					// look for what we want from attributes and subtags
-					$uicard = array('href' => '', 'img' => '', 'title' => '', 'text' => '');
+					$uicard = array('href' => '', 'img' => '', 'ratio' => '', 'title' => '', 'text' => '');
 					for ($i = 0; $i < count($attributes[0]); $i++) {
 						$uicard[ $attributes[1][$i] ] = $attributes[2][$i];
 					}
@@ -100,9 +107,15 @@ final class PicoUICard extends AbstractPicoPlugin
 						}
 						$uicard[ $subtags[1][$i] ] = $subtags[2][$i];
 					}
+					if (!empty($uicard['ratio'])) {
+						list($cardWidth, $cardHeight) = explode(':', $uicard['ratio']);
+						$cardRatio = ' padding-bottom: '.(max(0.01, min(floatval($cardHeight) / floatval($cardWidth), 10)) * 100).'%;';
+					} else {
+						$cardRatio = ''; // default
+					}
 					$result = '<!--OPEN_PICO_UI_CARD--><div class="row">';
 					$result .= '<a class="pico-ui-card-container_internal '.$config['cardPosition'].'" href="'.$uicard['href'].'">';
-					$result .= '<div class="pico-ui-card-background_internal" style="background: transparent url(\''.$uicard['img'].'\') no-repeat scroll; background-size: cover;">';
+					$result .= '<div class="pico-ui-card-background_internal" style="background: transparent url(\''.$uicard['img'].'\') no-repeat scroll; background-size: cover;'.$cardRatio.'">';
 					$result .= '<div class="pico-ui-card-gradient_internal">';
 					$result .= '<div class="pico-ui-card-title_internal '.$config['cardTitle'].'">';
 					$result .= $uicard['title'];
@@ -150,14 +163,17 @@ final class PicoUICard extends AbstractPicoPlugin
 		$headers .= '
 <style type="text/css">
 a.pico-ui-card-container_internal { display: block; padding: 10px; }
-.pico-ui-card-background_internal { width: 100%; padding-bottom: 56.25%; border-radius: 5px; box-shadow: 2px 2px 1px 0px rgba(0,0,0,0.2); position: relative; }
+@media (max-width: 768px) { a.pico-ui-card-container_internal.col-xs-6:nth-child(2n+1) { clear: both; } }
+@media (min-width: 769px) and (max-width: 992px) { a.pico-ui-card-container_internal.col-sm-6:nth-child(2n+1) { clear: both; } }
+@media (min-width: 993px) { a.pico-ui-card-container_internal.col-md-4:nth-child(3n+1) { clear: both; } }
+.pico-ui-card-background_internal { width: 100%; padding-bottom: '.$this->config['cardHeightMultiplier'].'%; border-radius: 5px; box-shadow: 2px 2px 1px 0px rgba(0,0,0,0.2); position: relative; }
 .pico-ui-card-gradient_internal { border-radius: 5px; position: absolute; top: 0; bottom: 0; left: 0; right: 0; background: linear-gradient(to bottom, rgba(0,0,0,0) 75%,rgba(0,0,0,0.8) 100%); }
 .pico-ui-card-title_internal { position: absolute; bottom: 5px; left: 10px; font-size: 24px; color: #fff; }
-@media screen and (max-width:320px) { .pico-ui-card-title_internal { font-size: 16px; } }
-@media screen and (min-width:321px) and (max-width:639px) { .pico-ui-card-title_internal { font-size: 20px; } }
+@media (max-width:320px) { .pico-ui-card-title_internal { font-size: 16px; } }
+@media (min-width:321px) and (max-width:639px) { .pico-ui-card-title_internal { font-size: 20px; } }
 .pico-ui-card-text_internal { display: block; line-height: 100%; padding: 10px; font-size: 18px; color: #000; text-decoration: none; }
-@media screen and (max-width:320px) { .pico-ui-card-text_internal { font-size: 14px; } }
-@media screen and (min-width:321px) and (max-width:639px) { .pico-ui-card-text_internal { font-size: 16px; } }
+@media (max-width:320px) { .pico-ui-card-text_internal { font-size: 14px; } }
+@media (min-width:321px) and (max-width:639px) { .pico-ui-card-text_internal { font-size: 16px; } }
 </style>
 ';
 		return $headers;

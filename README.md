@@ -28,7 +28,7 @@ Create a card (with a hyperlink) such as this:
 Using code that looks like below in your markdown file:
 
 ```
-[ui.card href="https://google.com" img="http://i.imgur.com/TkTgq3L.jpg"]
+[ui.card href="https://google.com" img="http://i.imgur.com/TkTgq3L.jpg" ratio="16:9"]
 [title]Cute Dog[/title]
 [text]This page is about this cute dog.[/text]
 [/ui.card]
@@ -58,13 +58,23 @@ If you don't, you can enable this setting to load Bootstrap from their official 
 $config[ 'PicoUICard.loadBootstrap' ] = true;
 ```
 
+**Card size ratio**: By default, card images are 16:9, meaning that the height is 56.25% of the width. You
+can change this default ratio, by assigning a value of `width:height` ratio. Default value is `16:9`.
+
+```
+$config[ 'PicoUICard.cardRatio' ] = '4:3';
+```
+
+Note that in addition to the default ratio setting, you can also change each individual card's ratio using
+the `ratio` attribute in the markdown tag.
+
 **Card size and positioning**: Pico UI Cards are wrapped within a `row` class (Bootstrap), and so each card
 has a definition of column size. (See [Bootstrap: Grid System](http://getbootstrap.com/css/#grid))
 
 Use the following config to change it. The default value is: `col-md-4 col-sm-6 col-xs-6`.
 
 ```
-$config[ 'PicoUICard.cssClass.cardPosition' ] = 'col-md-4 col-sm-6 col-xs-6';
+$config[ 'PicoUICard.cssClass.cardPosition' ] = 'col-md-6';
 ```
 
 **Title text and description text**: You can define your own CSS classes for the title text and description text.
