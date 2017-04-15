@@ -84,3 +84,63 @@ Typically the use case for this would be customizing font sizes, colors, etc.
 $config[ 'PicoUICard.cssClass.cardTitle' ] = 'my-title-class';
 $config[ 'PicoUICard.cssClass.cardText' ] = 'my-description-class';
 ```
+
+# Pico UI: Carousel
+
+Create a carousel (with hyperlinked slides) such as this:
+
+![image](https://cloud.githubusercontent.com/assets/5854176/25067283/5ae21d02-21f3-11e7-8fbd-cdbea0038bde.png)
+
+Using code that looks like below in your markdown file:
+
+```
+[ui.carousel ratio="2.35:1"]
+[slide href="https://google.com" img="http://i.imgur.com/3jRDGza.png"]First Cute Dog[/slide]
+[slide href="https://google.com" img="http://i.imgur.com/k6CAga7.png"]Second Cute Dog[/slide]
+[slide href="https://google.com" img="http://i.imgur.com/cnSJLRs.png"]Third Cute Dog[/slide]
+[/ui.carousel]
+```
+
+## Installation
+
+Installation is simple. Simply drop the `PicoUICarousel.php` file into the `plugins` directory of your Pico installation.
+
+## Configuration
+
+The plugin will not be enabled by default, so simply add the following line to your
+`config/config.php` file to enable it:
+
+```
+$config[ 'PicoUICarousel.enabled' ] = true;
+```
+
+**jQuery and Slick**: jQuery and the [Slick jQuery plugin](https://github.com/kenwheeler/slick/) are used in
+the Pico UI: Carousel plugin to create carousel displays. Since jQuery is commonly used, if your theme is
+already using it, you don't have to load it. Default config will not include an extra copy of it.
+
+As for Slick, if you have downloaded it to your site, you may config it to load locally. Otherwise, the plugin
+will automatically load it from the official CDN.
+
+```
+$config[ 'PicoUICarousel.loadJquery' ] = true;
+$config[ 'PicoUICarousel.jqueryUrl' ] = '//cdn.jsdelivr.net/jquery/3.2.1/jquery.min.js';
+$config[ 'PicoUICarousel.slickPath' ] = '//cdn.jsdelivr.net/jquery.slick/1.6.0';
+```
+
+**Carousel size ratio**: The size of the carousel will always be full screen width right now. You can however
+adjust the width to height ratio of it. The default ratio is 2.35:1, meaning that the height is 46.25% of
+the width. You can change this default ratio, by assigning a value of `width:height` ratio.
+
+```
+$config[ 'PicoUICarousel.carouselRatio' ] = '16:9';
+```
+
+Note that in addition to the default ratio setting, you can also change a carousel's ratio using
+the `ratio` attribute in the markdown tag.
+
+**Title text**: You can define your own CSS classes for the title text of a slide. Typically the use case for
+this would be customizing font sizes, colors, etc.
+
+```
+$config[ 'PicoUICarousel.cssClass.carouselText' ] = 'my-title-class';
+```
