@@ -130,7 +130,7 @@ final class PicoUICarousel extends AbstractPicoPlugin
 
 					$result = '<div class="pico-ui-carousel-container_internal"><div class="pico-ui-carousel_internal">';
 					for ($i = 0; $i < count($slides); $i++) {
-						$result .= '<div class="pico-ui-carousel-slide_internal" style="background: transparent url(\''.$slides[$i]['img'].'\') no-repeat scroll; background-size: cover;">';
+						$result .= '<div class="pico-ui-carousel-slide_internal" style="background: transparent url(\''.$slides[$i]['img'].'\') no-repeat scroll; background-size: cover; background-position: center center;">';
 						$result .= '<a href="'.$slides[$i]['href'].'" class="pico-ui-carousel-slide-content_internal" style="'.$ratio.'">';
 						$result .= '<div class="pico-ui-carousel-slide-shadow_bottom_internal"><div class="pico-ui-carousel-slide-shadow_sides_internal">';
 						$result .= '<div class="pico-ui-carousel-slide-text_internal '.$this->config['carouselText'].'">';
