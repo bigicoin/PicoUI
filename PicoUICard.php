@@ -146,7 +146,10 @@ final class PicoUICard extends AbstractPicoPlugin
 	public function onPageRendered(&$output)
 	{
 		// regular pages
+		// add css to end of <head>
 		$output = str_replace('</head>', ($this->buildExtraHeaders() . '</head>'), $output);
+		// add js to end of <body>
+		$output = str_replace('</body>', ($this->buildExtraFooters() . '</body>'), $output);
 	}
 
 	/**
@@ -157,7 +160,6 @@ final class PicoUICard extends AbstractPicoPlugin
 		// if set to true, load from bootstrap cdn
 		if ($this->config['loadBootstrap'] === true) {
 			$headers .= PHP_EOL.'<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />';
-			$headers .= PHP_EOL.'<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>';
 		}
 		// now set up card css classes
 		$headers .= '
@@ -177,5 +179,17 @@ a.pico-ui-card-container_internal { display: block; padding: 10px; }
 </style>
 ';
 		return $headers;
+	}
+
+	/**
+	 * Add some extra footer tags we need.
+	 */
+	private function buildExtraFooters() {
+		$footers = '';
+		// if set to true, load from bootstrap cdn
+		if ($this->config['loadBootstrap'] === true) {
+			$footers .= PHP_EOL.'<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>'.PHP_EOL;
+		}
+		return $footers;
 	}
 }
