@@ -144,3 +144,54 @@ this would be customizing font sizes, colors, etc.
 ```
 $config[ 'PicoUICarousel.cssClass.carouselText' ] = 'my-title-class';
 ```
+
+# Pico UI: Blurb
+
+Create a text blurb (with a hyperlink) along an image such as this, typically used to feature content:
+
+![image](https://cloud.githubusercontent.com/assets/5854176/26037599/8c90361c-38ab-11e7-9465-d7ab5928ff92.png)
+
+Using code that looks like below in your markdown file:
+
+```
+[ui.blurb href="https://google.com" img="http://i.imgur.com/BLPXYLZ.png"] 
+[title]Pancake Chef[/title] 
+[text]This dog is really good at making pancakes! To see what kind of recipes he uses and what his pancakes look like,
+you should totally click into this page to read more about it.
+[/text] 
+[more]Read more...[/more]
+[/ui.blurb] 
+```
+
+## Installation
+
+Installation is simple. Simply drop the `PicoUIBlurb.php` file into the `plugins` directory of your Pico installation.
+
+## Configuration
+
+The plugin will not be enabled by default, so simply add the following line to your
+`config/config.php` file to enable it:
+
+```
+$config[ 'PicoUIBlurb.enabled' ] = true;
+```
+
+**Bootstrap**: Bootstrap is a CSS and JS framework used commonly on many web sites. Pico UI Card relies on
+some Bootstrap CSS elements to style and position cards properly.
+
+If your theme already includes Bootstrap, you are good. Default config will not include an extra copy of it.
+
+If you don't, you can enable this setting to load Bootstrap from their official CDN.
+
+```
+$config[ 'PicoUIBlurb.loadBootstrap' ] = true;
+```
+
+**Title text, description text, more link text**: You can define your own CSS classes for the title text,
+description text and "More" link text. Typically the use case for this would be customizing font sizes, colors, etc.
+
+```
+$config[ 'PicoUIBlurb.cssClass.blurbTitle' ] = 'my-title-class';
+$config[ 'PicoUIBlurb.cssClass.blurbText' ] = 'my-text-class';
+$config[ 'PicoUIBlurb.cssClass.blurbMoreLink' ] = 'my-more-link-class';
+```
